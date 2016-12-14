@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
     }
 
     private void findViews() {
+        textResult = (TextView) findViewById(R.id.text_numbers);
         btn0 = (Button) findViewById(R.id.btn_0);
         btn1 = (Button) findViewById(R.id.btn_1);
         btn2 = (Button) findViewById(R.id.btn_2);
@@ -54,6 +55,36 @@ public class MainActivity extends Activity {
         btnDel = (Button) findViewById(R.id.btn_del);
         btnDot = (Button) findViewById(R.id.btn_dot);
         btnEquals = (Button) findViewById(R.id.btn_equals);
+    }
+
+    private void showNumber(char inputDigit) {
+
+        String str = textResult.getText().toString();
+        StringBuffer stringBuffer = new StringBuffer(str);
+
+        if (inputDigit != 'd') {
+
+            if (inputDigit == '.' && str.contains(".")) {
+                return;
+            }
+
+            if (inputDigit == '0' && str.equals("0")) {
+                return;
+            }
+
+            if(str.equals("0")){
+                stringBuffer.deleteCharAt(0);
+            }
+
+            stringBuffer.append(inputDigit);
+
+        } else {
+
+            if (stringBuffer.length() > 0) {
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+            }
+        }
+        textResult.setText(stringBuffer.toString());
     }
 
     private void setListener() {
@@ -82,24 +113,34 @@ public class MainActivity extends Activity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btn_0:
+                    showNumber('0');
                     break;
                 case R.id.btn_1:
+                    showNumber('1');
                     break;
                 case R.id.btn_2:
+                    showNumber('2');
                     break;
                 case R.id.btn_3:
+                    showNumber('3');
                     break;
                 case R.id.btn_4:
+                    showNumber('4');
                     break;
                 case R.id.btn_5:
+                    showNumber('5');
                     break;
                 case R.id.btn_6:
+                    showNumber('6');
                     break;
                 case R.id.btn_7:
+                    showNumber('7');
                     break;
                 case R.id.btn_8:
+                    showNumber('8');
                     break;
                 case R.id.btn_9:
+                    showNumber('9');
                     break;
                 case R.id.btn_plus:
                     break;
@@ -110,8 +151,10 @@ public class MainActivity extends Activity {
                 case R.id.btn_divided:
                     break;
                 case R.id.btn_del:
+                    showNumber('d');
                     break;
                 case R.id.btn_dot:
+                    showNumber('.');
                     break;
                 case R.id.btn_equals:
                     break;
