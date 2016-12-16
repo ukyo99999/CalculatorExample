@@ -2,6 +2,7 @@ package net.ukyo.calculatorexample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +27,9 @@ public class MainActivity extends Activity {
     private Button btnDel;
     private Button btnDot;
     private Button btnEquals;
+    private float firstOperand;
+    private float sencondNumber;
+    boolean isOperatorPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,36 +61,6 @@ public class MainActivity extends Activity {
         btnEquals = (Button) findViewById(R.id.btn_equals);
     }
 
-    private void showNumber(char inputDigit) {
-
-        String str = textResult.getText().toString();
-        StringBuffer stringBuffer = new StringBuffer(str);
-
-        if (inputDigit != 'd') {
-
-            if (inputDigit == '.' && str.contains(".")) {
-                return;
-            }
-
-            if (inputDigit == '0' && str.equals("0")) {
-                return;
-            }
-
-            if(str.equals("0")){
-                stringBuffer.deleteCharAt(0);
-            }
-
-            stringBuffer.append(inputDigit);
-
-        } else {
-
-            if (stringBuffer.length() > 0) {
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-            }
-        }
-        textResult.setText(stringBuffer.toString());
-    }
-
     private void setListener() {
         btn0.setOnClickListener(clickListener);
         btn1.setOnClickListener(clickListener);
@@ -105,6 +79,51 @@ public class MainActivity extends Activity {
         btnDel.setOnClickListener(clickListener);
         btnDot.setOnClickListener(clickListener);
         btnEquals.setOnClickListener(clickListener);
+    }
+
+    private void showNumber(char inputDigit) {
+
+        /* erase firstOperand */
+        if (isOperatorPressed) {
+            textResult.setText("0");
+            isOperatorPressed = false;
+        }
+
+        String str = textResult.getText().toString();
+        StringBuffer stringBuffer = new StringBuffer(str);
+
+        if (inputDigit != 'd') {
+
+            if (inputDigit == '.' && str.contains(".")) {
+                return;
+            }
+
+            if (inputDigit == '0' && str.equals("0")) {
+                return;
+            }
+
+            if (str.equals("0")) {
+                stringBuffer.deleteCharAt(0);
+            }
+
+            stringBuffer.append(inputDigit);
+
+        } else {
+
+            if (stringBuffer.length() > 0) {
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+            }
+        }
+        textResult.setText(stringBuffer.toString());
+    }
+
+    private float getOperand() {
+
+        float number;
+
+        number = Float.valueOf(textResult.getText().toString());
+
+        return number;
     }
 
 
@@ -143,12 +162,20 @@ public class MainActivity extends Activity {
                     showNumber('9');
                     break;
                 case R.id.btn_plus:
+                    firstOperand = getOperand();
+                    isOperatorPressed = true;
                     break;
                 case R.id.btn_minus:
+                    firstOperand = getOperand();
+                    isOperatorPressed = true;
                     break;
                 case R.id.btn_times:
+                    firstOperand = getOperand();
+                    isOperatorPressed = true;
                     break;
                 case R.id.btn_divided:
+                    firstOperand = getOperand();
+                    isOperatorPressed = true;
                     break;
                 case R.id.btn_del:
                     showNumber('d');
