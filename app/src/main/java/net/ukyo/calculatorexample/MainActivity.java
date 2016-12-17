@@ -2,10 +2,11 @@ package net.ukyo.calculatorexample;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends Activity {
 
@@ -28,8 +29,9 @@ public class MainActivity extends Activity {
     private Button btnDot;
     private Button btnEquals;
     private float firstOperand;
-    private float sencondNumber;
+    private float secondNumber;
     boolean isOperatorPressed = false;
+    private int mOperator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,64 +128,109 @@ public class MainActivity extends Activity {
         return number;
     }
 
+    private void showResult() {
+
+        DecimalFormat df = new DecimalFormat("###.####");
+
+        switch (mOperator) {
+
+            case 0:
+                textResult.setText(String.valueOf(df.format(firstOperand + secondNumber)));
+                break;
+            case 1:
+                textResult.setText(String.valueOf(df.format(firstOperand - secondNumber)));
+                break;
+            case 2:
+                textResult.setText(String.valueOf(df.format(firstOperand * secondNumber)));
+                break;
+            case 3:
+                textResult.setText(String.valueOf(df.format(firstOperand / secondNumber)));
+                break;
+        }
+
+    }
+
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+
                 case R.id.btn_0:
                     showNumber('0');
                     break;
+
                 case R.id.btn_1:
                     showNumber('1');
                     break;
+
                 case R.id.btn_2:
                     showNumber('2');
                     break;
+
                 case R.id.btn_3:
                     showNumber('3');
                     break;
+
                 case R.id.btn_4:
                     showNumber('4');
                     break;
+
                 case R.id.btn_5:
                     showNumber('5');
                     break;
+
                 case R.id.btn_6:
                     showNumber('6');
                     break;
+
                 case R.id.btn_7:
                     showNumber('7');
                     break;
+
                 case R.id.btn_8:
                     showNumber('8');
                     break;
+
                 case R.id.btn_9:
                     showNumber('9');
                     break;
+
                 case R.id.btn_plus:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
+                    mOperator = 0;
                     break;
+
                 case R.id.btn_minus:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
+                    mOperator = 1;
                     break;
+
                 case R.id.btn_times:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
+                    mOperator = 2;
                     break;
+
                 case R.id.btn_divided:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
+                    mOperator = 3;
                     break;
+
                 case R.id.btn_del:
                     showNumber('d');
                     break;
+
                 case R.id.btn_dot:
                     showNumber('.');
                     break;
+
                 case R.id.btn_equals:
+                    secondNumber = getOperand();
+                    showResult();
                     break;
             }
 
