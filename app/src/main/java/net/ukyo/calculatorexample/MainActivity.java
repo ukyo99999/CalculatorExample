@@ -29,9 +29,13 @@ public class MainActivity extends Activity {
     private Button btnDot;
     private Button btnEquals;
     private float firstOperand;
-    private float secondNumber;
+    private float secondOperand;
     boolean isOperatorPressed = false;
     private int mOperator;
+    private final int PLUS = 0;
+    private final int MINUS = 1;
+    private final int TIMES = 2;
+    private final int DIVIDED = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,17 +138,17 @@ public class MainActivity extends Activity {
 
         switch (mOperator) {
 
-            case 0:
-                textResult.setText(String.valueOf(df.format(firstOperand + secondNumber)));
+            case PLUS:
+                textResult.setText(String.valueOf(df.format(firstOperand + secondOperand)));
                 break;
-            case 1:
-                textResult.setText(String.valueOf(df.format(firstOperand - secondNumber)));
+            case MINUS:
+                textResult.setText(String.valueOf(df.format(firstOperand - secondOperand)));
                 break;
-            case 2:
-                textResult.setText(String.valueOf(df.format(firstOperand * secondNumber)));
+            case TIMES:
+                textResult.setText(String.valueOf(df.format(firstOperand * secondOperand)));
                 break;
-            case 3:
-                textResult.setText(String.valueOf(df.format(firstOperand / secondNumber)));
+            case DIVIDED:
+                textResult.setText(String.valueOf(df.format(firstOperand / secondOperand)));
                 break;
         }
 
@@ -199,25 +203,25 @@ public class MainActivity extends Activity {
                 case R.id.btn_plus:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
-                    mOperator = 0;
+                    mOperator = PLUS;
                     break;
 
                 case R.id.btn_minus:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
-                    mOperator = 1;
+                    mOperator = MINUS;
                     break;
 
                 case R.id.btn_times:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
-                    mOperator = 2;
+                    mOperator = TIMES;
                     break;
 
                 case R.id.btn_divided:
                     firstOperand = getOperand();
                     isOperatorPressed = true;
-                    mOperator = 3;
+                    mOperator = DIVIDED;
                     break;
 
                 case R.id.btn_del:
@@ -229,7 +233,7 @@ public class MainActivity extends Activity {
                     break;
 
                 case R.id.btn_equals:
-                    secondNumber = getOperand();
+                    secondOperand = getOperand();
                     showResult();
                     break;
             }
